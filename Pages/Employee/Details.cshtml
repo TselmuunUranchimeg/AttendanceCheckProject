@@ -1,0 +1,35 @@
+@page "{EmployeeName}"
+@model EmployeeDetailsModel
+@{
+    ViewData["Title"] = "Employee details";
+}
+
+<div class = "box-border w-auto px-5 pt-5">
+    @{
+        if (Model.UserData is null)
+        {
+            <h1>No information about this individual exists in the database.</h1>
+        } else
+        {
+            <div class = "d-flex justify-content-between mb-4">
+                <h2>Name</h2>
+                <p class = "fs-4">@Model.UserData.UserName</p>
+            </div>
+            <div class = "d-flex justify-content-between mb-4">
+                <h2>Age</h2>
+                <p class = "fs-4">@Model.UserData.Age</p>
+            </div>
+            <div class = "d-flex justify-content-between mb-4">
+                <h2>Email</h2>
+                <p class = "fs-4">@Model.UserData.Email</p>
+            </div>
+            <div class = "d-flex justify-content-between mb-4">
+                <h2>Department</h2>
+                <p class = "fs-4">@Model.UserData.Department</p>
+            </div>
+            <a href = "/" class = "text-decoration-none btn core-color text-white fs-5 fw-normal">
+                @String.Format("<- Go to homepage")
+            </a>
+        }
+    }
+</div>

@@ -1,0 +1,43 @@
+@page
+@model HomepageModel
+@inject UserManager<UserModel> _userManager;
+@{
+    var user = await _userManager.GetUserAsync(User);
+    var roles = await _userManager.GetRolesAsync(user);
+    string title = "Employee homepage";
+    if (roles.Contains("Admin"))
+    {
+        title = "Admin homepage";
+    }
+    ViewData["Title"] = title;
+}
+
+<div class = "h-75 box-sizing px-5 py-5 overflow-auto">
+    @{
+    if (Model.RecentActivities.Count() == 0)
+    {
+        <p class = "fs-3 ms-3">No recent activities as of now!</p>
+    } else
+    {
+        <div class = "h-100 overflow-auto ms-3">
+            <h3>Recent activities</h3>
+            @foreach(Attendance activity in Model.RecentActivities)
+            {
+                <p>@String.Format($"{activity.Status} at {activity.Date}")</p>
+            }
+        </div>
+    }
+}
+</div>
+
+<div class = "ms-5">
+    <div class = "d-flex mb-3">
+        <form method = "post" asp-page-handler = "CheckIn">
+            <button type = "submit" class = "btn btn-large core-color text-white no-corner me-5 fs-4">Check in</button>
+        </form>
+        <form method = "post" asp-page-handler = "CheckOut">
+            <button type = "submit" class = "btn btn-large btn-primary text-white no-corner me-5 fs-4">Check out</button>
+        </form>
+    </div>
+    <h1 class = "text-danger">@ViewData["ErrorMessage"]</h1>
+</div>

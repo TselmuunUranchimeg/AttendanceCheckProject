@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="position-absolute background">
+        <svg viewBox="0 0 1922 673" fill="none" xmlns="http://www.w3.org/2000/svg" class = "position-absolute wave" id = "waves">
+            <path opacity="0.2" d="M600.825 16.3031C424.241 -34.9962 1 98.089 1 98.089V672H1918.2V1.90274C1918.2 1.90274 1663.13 186.232 1352.01 195.851C1040.88 205.469 777.409 67.6024 600.825 16.3031Z" fill="#C4C4C4" stroke="#C4C4C4"/>
+            <path opacity="0.2" d="M603.628 129.088C427.044 86.6128 3.80292 196.806 3.80292 196.806V672H1921V117.165C1921 117.165 1665.93 269.788 1354.81 277.752C1043.69 285.716 780.212 171.564 603.628 129.088Z" fill="#C4C4C4" stroke="#C4C4C4"/>
+            <path opacity="0.2" d="M603.628 248.122C427.044 214.96 3.80292 300.993 3.80292 300.993V672H1921V238.813C1921 238.813 1665.93 357.974 1354.81 364.191C1043.69 370.409 780.212 281.285 603.628 248.122Z" fill="#C4C4C4" stroke="#C4C4C4"/>
+        </svg>
+    </div>
+    <main role="main" class="">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/js/site.js" asp-append-version = "true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

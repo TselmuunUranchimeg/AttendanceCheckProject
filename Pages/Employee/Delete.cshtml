@@ -1,0 +1,33 @@
+@page "{Name}"
+@model EmployeeDeleteModel
+@{
+    ViewData["Title"] = "Delete user";
+}
+
+<div class = "box-border w-auto px-5 pt-5">
+    @{
+        <div class = "d-flex justify-content-between mb-4">
+            <h2>Name</h2>
+            <p class = "fs-4">@Model.UserData.UserName</p>
+        </div>
+        <div class = "d-flex justify-content-between mb-4">
+            <h2>Age</h2>
+            <p class = "fs-4">@Model.UserData.Age</p>
+        </div>
+        <div class = "d-flex justify-content-between mb-4">
+            <h2>Email</h2>
+            <p class = "fs-4">@Model.UserData.Email</p>
+        </div>
+        <div class = "d-flex justify-content-between mb-4">
+            <h2>Department</h2>
+            <p class = "fs-4">@Model.UserData.Department</p>
+        </div>
+        <h1 class = "h1 text-danger">@ViewData["ErrorMessage"]</h1>
+        <form method = "post" class = "mb-5">
+            <button type = "submit" class = "btn btn-danger btn-large">Delete</button>
+        </form>
+        <a href = "/" class = "btn btn-large core-color text-white">
+            @String.Format($"<- Go back to homepage")
+        </a>
+    }
+</div>

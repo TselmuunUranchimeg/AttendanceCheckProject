@@ -1,0 +1,29 @@
+@page "{Year}/{Month}"
+@model EmployeeAttendanceModel
+@{
+    ViewData["Title"] = "Attendance";
+}
+
+<div class = "overflow-auto box-border px-5 pt-5">
+    @{
+        if (Model.Attendances.Count() == 0)
+        {
+            <h1>There is no record of your attendance at this point in time!</h1>
+        } else
+        {
+            <h1>@Model.MonthNames[Model.Month], @Model.Year</h1>
+            @foreach(var item in Model.Attendances)
+            {
+                if (item.Status == "Checked out early" || item.Status == "Checked in late")
+                {
+                    <a href = @String.Format($"/Employee/CheckDay/{item.ID}")>
+                        @String.Format($"{item.Status} at {item.Date}")
+                    </a>
+                } else
+                {
+                    <p>@String.Format($"{item.Status} at {item.Date}")</p>
+                }
+            }
+        }
+    }
+</div>

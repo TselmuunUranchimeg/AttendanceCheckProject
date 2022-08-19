@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using Models;
+@inject SignInManager<UserModel> signInManager;
+@inject UserManager<UserModel> userManager;
+
+@{
+    if (signInManager.IsSignedIn(User))
+    {
+        if (await userManager.GetUserAsync(User) is null)
+        {
+            await signInManager.SignOutAsync();
+            Layout = "_Layout";
+        } else
+        {
+            Layout = "_AuthorizedLayout";
+        }
+    } else
+    {
+        Layout = "_Layout";
+    }
+}

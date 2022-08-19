@@ -1,0 +1,25 @@
+@page "{DayId}"
+@model CheckDayModel
+@{
+    ViewData["Title"] = "Check attendance detail";
+}
+
+<div class = "w-100 h-100 d-flex border-box flex-column px-5 pt-5">
+    <div class = "flex-row d-flex justify-content-between mb-5">
+        <h1>Status</h1>
+        <p>@Model.Target.Status</p>
+    </div>
+    <div class = "flex-row d-flex justify-content-between mb-5">
+        <h1>Date</h1>
+        <p>@Model.Target.Date</p>
+    </div>
+    <div class = "d-flex flex-column">
+        <form method = "post" class = "">
+            <textarea asp-for="Reason" class="form-control" aria-required="true" placeholder = "Reason" class = "mb-5" rows = 8>
+                @Model.Target.Reason
+            </textarea>
+            <span asp-validation-for="Reason" class="text-danger"></span>
+            <button class = "btn btn-large text-white core-color mt-5">Submit</button>
+        </form>
+    </div>
+</div>

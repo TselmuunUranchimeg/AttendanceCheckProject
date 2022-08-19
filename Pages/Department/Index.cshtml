@@ -1,0 +1,28 @@
+@page "{DepartmentName}"
+@model DepartmentModel
+@{
+    ViewData["Title"] = Model.DepartmentName;
+}
+
+<div class = "w-auto box-sizing px-5 pt-5">
+    <h1 class = "h1 mb-4 fw-normal">@Model.DepartmentName</h1>
+    @{
+        if (Model.Names.Count() == 0)
+        {
+            <p>Currently, there is no one in @Model.DepartmentName.ToLower()</p>
+        } else
+        {
+            @foreach(var name in Model.Names)
+            {
+                <div class = "d-flex justify-content-between mb-4">
+                    <p class = "fs-4">@name</p>
+                    <div>
+                        <a class = "fs-4 text-decoration-none text-primary pe-3" href = @String.Format($"/Employee/Edit/{name}")>Edit</a>
+                        <a class = "fs-4 text-decoration-none text-primary pe-3" href = @String.Format($"/Employee/Details/{name}")>Details</a>
+                        <a class = "fs-4 text-decoration-none text-primary pe-3" href = @String.Format($"/Employee/Delete/{name}")>Delete</a>
+                    </div>
+                </div>
+            }
+        }
+    }      
+</div>

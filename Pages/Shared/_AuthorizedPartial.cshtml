@@ -1,0 +1,42 @@
+@inject UserManager<UserModel> userManager;
+
+@{
+    var user = await userManager.GetUserAsync(User);
+    var roles = await userManager.GetRolesAsync(user);
+    <li class = "w-100 sidebar-link text-start px-5 mb-4">
+        <a 
+            href = "/Homepage" 
+            class = "text-decoration-none text-white fs-4"
+        >
+            Homepage
+        </a>
+    </li>
+    if (roles.Contains("Admin"))
+    {
+        <li class = "w-100 sidebar-link text-start px-5 mb-4">
+            <a href = "/Admin/Departments" class = "text-decoration-none text-white fs-4">
+                Departments
+            </a>
+        </li>
+        <li class = "w-100 sidebar-link text-start px-5 mb-4">
+            <a href = "/Admin/AddEmployee" class = "text-decoration-none text-white fs-4">
+                Add employee
+            </a>
+        </li>
+    } else {
+        <li class = "w-100 sidebar-link text-start px-5 mb-4">
+            <a 
+                href = @String.Format($"/Employee/Attendance/{DateTime.Now.Year}/{DateTime.Now.Month}") 
+                class = "text-decoration-none text-white fs-4"
+            >
+                Attendance
+            </a>
+        </li>
+    }
+    <a 
+        href = "/Logout"
+        class = "position-absolute sidebar-logout-link start-50 translate-middle text-decoration-none text-white fs-4"
+    >
+        @String.Format("<- Logout")
+    </a>
+}

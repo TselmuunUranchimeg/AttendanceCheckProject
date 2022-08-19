@@ -1,0 +1,1 @@
+This is a web application that tracks records of every employee's attendance. It is built using latest version of .NET Core, .NET 6, MySQL, and styled with Bootstrap, and Metro.

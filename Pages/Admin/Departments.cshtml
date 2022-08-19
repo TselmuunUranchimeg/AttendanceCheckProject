@@ -1,0 +1,29 @@
+@page
+@model AdminTeamsModel
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class = "box-border w-auto px-5 pt-5 overflow-auto h-75">
+    @foreach(KeyValuePair<string, IEnumerable<string>> item in Model.Data)
+    {
+        <div class = "d-flex justify-content-between">
+            <h1 class = "mb-3 fw-bold">@item.Key</h1>
+            <p class = "h2">@item.Value.Count()</p>
+        </div>
+        foreach(string employeeName in item.Value)
+        {
+            <div class = "d-flex justify-content-between">
+                <p class = "fs-4">@employeeName</p>
+                <div class = "">
+                    <a class = "fs-5 pe-2" href = @String.Format($"/Employee/Edit/{employeeName}")>Edit</a>
+                    <a class = "fs-5 pe-2" href = @String.Format($"/Employee/Details/{employeeName}")>Details</a>
+                    <a class = "fs-5 pe-2" href = @String.Format($"/Employee/Delete/{employeeName}")>Delete</a>
+                </div>
+            </div>
+        }
+    }
+</div>
+<a class = "btn btn-primary text-white ms-3" href = "/">
+    @String.Format($"<- Go to homepage")
+</a>

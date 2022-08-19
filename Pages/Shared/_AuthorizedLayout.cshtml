@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+</head>
+<body>
+    <main class = "vh-100 m-0">
+        <div class = "d-flex h-100">
+            <aside 
+                class="sidebar pos-absolute z-2"
+                data-role="sidebar"
+                data-toggle="#sidebar-toggle-4"
+                id="sb4"
+                data-shift=".shifted-content-2"
+                data-static-shift=".shifted-content-2"
+                data-static="md"
+            >
+                <div class = "sidebar-header core-color border-0 d-flex align-items-center justify-content-center">
+                    <a href = "/" class = "text-decoration-none text-white fs-2 fw-bold">
+                        OnTime
+                    </a>
+                </div>
+                <ul class = "sidebar-menu core-color">
+                    <partial name = "_AuthorizedPartial" />
+                </ul>
+            </aside>
+            <div class = "shifted-content-2 h-100 p-ab w-100">
+                <div class="appbar pos-absolute core-color z-1" data-role="appbar">
+                    <button class="app-bar-item c-pointer fs-1" id="sidebar-toggle-4">
+                        <span class="mif-menu fg-white"></span>
+                    </button>
+                </div>
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

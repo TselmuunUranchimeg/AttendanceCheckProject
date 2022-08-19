@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid px-5 pe-5 me-5">
+        <a class="navbar-brand fs-1" href="/" class = "fw-bolder">OnTime</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item me-4">
+                    <a class="nav-link" aria-current="page" href="/Documentation">
+                        Documentation
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class = "w-100 row align-items-start mt-4">
+    <div class = "col-md-6 px-5 pt-5 box-sizing">
+        <h1 class = "h1">OnTime</h1>
+        <p class = "fs-3">Check in and check out on time</p>
+        <button class = "btn core-color">
+            <a href = "/Login" class = "text-decoration-none fs-3 text-white">Log in</a>
+        </button>
+    </div>
+    <div class = "col-md-6 flex-row justify-content-center d-flex">
+        <img src = "clock.png" alt = "clock" class = "img-60"/>
+    </div>
+</div>

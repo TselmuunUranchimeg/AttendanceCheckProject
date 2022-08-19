@@ -1,0 +1,42 @@
+@page
+@model AddEmployeeModel;
+@{
+    ViewData["Title"] = "Register new employee";
+}
+
+<div class = "d-flex align-items-center justify-content-center h-100">
+    <form id="account" method="post" class = "form-custom" autocomplete="off">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating mb-5">
+            <input asp-for="Input.Email" class="form-control" aria-required="true" />
+            <label asp-for="Input.Email" class="form-label"></label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-5">
+            <input asp-for="Input.Name" class="form-control" aria-required="true" />
+            <label asp-for="Input.Name" class="form-label"></label>
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-5">
+            <input asp-for="Input.Age" class="form-control" aria-required="true" min= "0" />
+            <label asp-for="Input.Age" class="form-label"></label>
+            <span asp-validation-for="Input.Age" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-5">
+            <input asp-for="Input.Password" class="form-control" aria-required="true" />
+            <label asp-for="Input.Password" class="form-label"></label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-5">
+            <input asp-for="Input.Department" class="form-control" aria-required="true" />
+            <label asp-for="Input.Department" class="form-label"></label>
+            <span asp-validation-for="Input.Department" class="text-danger"></span>
+        </div>
+        <div>
+            <button id="addEmployee-submit" type="submit" class="w-100 btn btn-lg core-color text-white">Add employee</button>
+        </div>
+        <a class = "btn btn-lg text-white btn-primary mt-5 w-100" href = "/">
+            @String.Format($"<- Go to homepage")
+        </a>
+    </form>
+</div>

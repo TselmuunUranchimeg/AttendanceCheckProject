@@ -1,0 +1,21 @@
+@page "/Admin/Homepage"
+@model AdminHomepageModel
+@{
+    ViewData["Title"] = "Admin homepage";
+}
+
+<div class = "w-auto box-sizing px-5 pt-5">
+    <div class = "d-flex flex-column">
+        <div class = "d-flex justify-content-between mb-5">
+            <h3>Departments</h3>
+            <h3>Amount</h3>
+        </div>
+        @foreach(var item in Model.Data)
+        {
+            <div class = "d-flex justify-content-between mb-5">
+                <a class = "fs-4 text-decoration-none text-primary" href = @String.Format($"/Department/{item.Key}")>@item.Key</a>
+                <p class = "fs-4">@item.Value</p>
+            </div>
+        }
+    </div>
+</div>
