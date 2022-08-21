@@ -27,8 +27,11 @@
                 <h2>Department</h2>
                 <p class = "fs-4">@Model.UserData.Department</p>
             </div>
-            <a href = "/" class = "btn core-color text-white fs-5 fw-normal">
+            <a href = "/" class = "btn btn-primary text-white fs-5 fw-normal me-5">
                 @String.Format("<- Go to homepage")
+            </a>
+            <a href = @String.Format($"/Employee/Attendance/{Model.UserData.Id}") class = "btn core-color text-white fs-5 fw-normal">
+                @String.Format("Go see attendance -> ")
             </a>
         }
     }
