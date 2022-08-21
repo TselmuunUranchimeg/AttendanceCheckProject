@@ -24,7 +24,7 @@ public class HomepageModel: PageModel
         _attendanceCheck = attendanceCheck;
     }
 
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
         UserModel user = await _userManager.GetUserAsync(User);
         var list = 
@@ -32,6 +32,7 @@ public class HomepageModel: PageModel
             where item.EmployeeId == user.Id
             select item;
         RecentActivities = list.Take(10);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostCheckIn()
@@ -42,12 +43,12 @@ public class HomepageModel: PageModel
             var newAttendance = _attendanceCheck.Check(user, DateTime.Now, StatusEnum.CheckIn);
             _context.Attendance?.Add(newAttendance);
             await _context.SaveChangesAsync();
-            return Page();
+            return await OnGetAsync();
         }
         catch (CustomException e)
         {
             ViewData["ErrorMessage"] = e.Message;
-            return Page();
+            return await OnGetAsync();
         }
     }
     public async Task<IActionResult> OnPostCheckOut()
@@ -58,12 +59,12 @@ public class HomepageModel: PageModel
             var newAttendance = _attendanceCheck.Check(user, DateTime.Now, StatusEnum.CheckOut);
             _context.Attendance?.Add(newAttendance);
             await _context.SaveChangesAsync();
-            return Page();
+            return await OnGetAsync();
         }
         catch (CustomException e)
         {
             ViewData["ErrorMessage"] = e.Message;
-            return Page();
+            return await OnGetAsync();
         }
     }
 }
