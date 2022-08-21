@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Services.CheckRole;
 using Services.AttendanceCheck;
 using ScheduledTasks;
 using Quartz;
@@ -32,6 +33,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/AccessDenied";
 });
 builder.Services.AddTransient<IAttendanceCheck, AttendanceCheck>();
+builder.Services.AddTransient<ICheckRole, CheckRole>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddQuartz(q =>
@@ -71,5 +73,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();

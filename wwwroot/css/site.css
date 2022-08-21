@@ -55,13 +55,17 @@ html {
     border-radius: 0 !important;
 }
 
-@media only screen and (max-width: 950px) {
-    .sidebar {
-        position: absolute !important;
-        height: 100vh;
-        left: -360px;
-    }
+.table-bordered {
+    border: 1px solid #dee2e6;
 }
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
 @media only screen and (min-width: 1367px) {
     .img-60 {
         width: 75%;

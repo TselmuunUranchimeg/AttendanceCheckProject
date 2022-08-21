@@ -21,25 +21,9 @@ public class CheckForUncheckedOut: IJob
     public async Task Execute(IJobExecutionContext context)
     {
         DateTime thatDay = DateTime.Now;
-        var alreadyCheckedOutUserIds = 
-            from a in _context.Attendance!.AsEnumerable()
-            where a.Date.Day == thatDay.Day
-            where a.Date.TimeOfDay <= thatDay.TimeOfDay
-            where a.Date.TimeOfDay >= new DateTime(1, 1, 1, 15, 0, 0).TimeOfDay
-            where a.Status == "Checked out" || a.Status == "Checked out early"
-            select a.EmployeeId;
-        if (alreadyCheckedOutUserIds is null)
-        {
-            await Task.WhenAll(_userManager.Users.AsEnumerable().Select<UserModel, Task>(
-                async (UserModel user) => await CheckAndAdd(user, _context, thatDay)
-            ));
-            return;
-        }
-        var notCheckedOutUsers = _userManager.Users.Where(
-            i => !alreadyCheckedOutUserIds!.Contains(i.Id)).AsEnumerable();
-        await Task.WhenAll(notCheckedOutUsers.Select<UserModel, Task>(async (UserModel user) =>
-            await CheckAndAdd(user, _context, thatDay)));
-        await Task.CompletedTask;
+        await Task.WhenAll(_userManager.Users.AsEnumerable().Select<UserModel, Task>(
+            async (UserModel user) => await CheckAndAdd(user, _context, thatDay)
+        ));
     }
 
     public async Task CheckAndAdd(UserModel user, AttendanceDbContext _context, DateTime thatDay)

@@ -8,8 +8,8 @@
     @foreach(KeyValuePair<string, IEnumerable<string>> item in Model.Data)
     {
         <div class = "d-flex justify-content-between">
-            <h1 class = "mb-3 fw-bold">@item.Key</h1>
-            <p class = "h2">@item.Value.Count()</p>
+            <h1 class = "mb-3 fw-normal">@item.Key</h1>
+            <p class = "h2 fw-normal">@item.Value.Count()</p>
         </div>
         foreach(string employeeName in item.Value)
         {

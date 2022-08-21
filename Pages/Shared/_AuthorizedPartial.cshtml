@@ -11,6 +11,14 @@
             Homepage
         </a>
     </li>
+    <li class = "w-100 sidebar-link text-start px-5 mb-4">
+            <a 
+                href = @String.Format($"/Employee/Attendance/{user.Id}") 
+                class = "text-decoration-none text-white fs-4"
+            >
+                Attendance
+            </a>
+        </li>
     if (roles.Contains("Admin"))
     {
         <li class = "w-100 sidebar-link text-start px-5 mb-4">
@@ -21,15 +29,6 @@
         <li class = "w-100 sidebar-link text-start px-5 mb-4">
             <a href = "/Admin/AddEmployee" class = "text-decoration-none text-white fs-4">
                 Add employee
-            </a>
-        </li>
-    } else {
-        <li class = "w-100 sidebar-link text-start px-5 mb-4">
-            <a 
-                href = @String.Format($"/Employee/Attendance/{DateTime.Now.Year}/{DateTime.Now.Month}") 
-                class = "text-decoration-none text-white fs-4"
-            >
-                Attendance
             </a>
         </li>
     }

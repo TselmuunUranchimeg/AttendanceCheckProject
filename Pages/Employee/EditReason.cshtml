@@ -1,0 +1,24 @@
+@page "{EmployeeId}/{AttId}"
+@model EditReasonModel
+@{
+    ViewData["Title"] = "Edit reason";
+}
+
+<div class = "w-100 h-100 box-border px-5 pt-5">
+    <div class = "d-flex justify-content-between">
+        <h3 class = "fw-normal">Status</h3>
+        <p>@Model.Target!.Status</p>
+    </div>
+    <div class = "d-flex justify-content-between">
+        <h3 class = "fw-normal">Date</h3>
+        <p>@Model.Target!.Date</p>
+    </div>
+    <form method = "post">
+        <label class = "fs-3 fw-medium" asp-for="Reason" class="control-label mb-2"></label>
+        <textarea asp-for="Reason" rows = "5" placeholder = "Reason" name="Reason"></textarea>
+        <span asp-validation-for="Reason" class="text-danger"></span>
+        <button type = "submit" class = "btn btn-success btn-lg mt-5">
+            Submit
+        </button>
+    </form>
+</div>

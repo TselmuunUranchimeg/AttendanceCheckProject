@@ -1,29 +1,33 @@
-@page "{Year}/{Month}"
+@page "{EmployeeId}"
 @model EmployeeAttendanceModel
 @{
     ViewData["Title"] = "Attendance";
 }
 
-<div class = "overflow-auto box-border px-5 pt-5">
+<div class = "box-border px-5 pt-5 d-flex align-items-center justify-content-center w-100 h-100 flex-column">
     @{
-        if (Model.Attendances.Count() == 0)
-        {
-            <h1>There is no record of your attendance at this point in time!</h1>
-        } else
-        {
-            <h1>@Model.MonthNames[Model.Month], @Model.Year</h1>
-            @foreach(var item in Model.Attendances)
-            {
-                if (item.Status == "Checked out early" || item.Status == "Checked in late")
-                {
-                    <a href = @String.Format($"/Employee/CheckDay/{item.ID}")>
-                        @String.Format($"{item.Status} at {item.Date}")
-                    </a>
-                } else
-                {
-                    <p>@String.Format($"{item.Status} at {item.Date}")</p>
-                }
-            }
-        }
+        <div class = "card-header w-50 d-flex justify-content-between core-color text-white">
+            <h3 class = "m-0 pointer" onclick = "back()">@String.Format("<-")</h3>
+            <h3 class="text-center m-0" id="monthAndYear"></h3>
+            <h3 class = "m-0 pointer" onclick = "next()">@String.Format("->")</h3>
+        </div>
+        <table class = "table w-50 h-50 m-0 table-bordered">
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id = "calendar-body">
+
+            </tbody>
+        </table>
     }
 </div>
+
+<script src = "/js/calendar.js"></script>

@@ -1,25 +1,36 @@
-@page "{DayId}"
+@page "{EmployeeId}/{Year}/{Month}/{Day}"
 @model CheckDayModel
 @{
     ViewData["Title"] = "Check attendance detail";
 }
 
-<div class = "w-100 h-100 d-flex border-box flex-column px-5 pt-5">
-    <div class = "flex-row d-flex justify-content-between mb-5">
-        <h1>Status</h1>
-        <p>@Model.Target.Status</p>
-    </div>
-    <div class = "flex-row d-flex justify-content-between mb-5">
-        <h1>Date</h1>
-        <p>@Model.Target.Date</p>
-    </div>
-    <div class = "d-flex flex-column">
-        <form method = "post" class = "">
-            <textarea asp-for="Reason" class="form-control" aria-required="true" placeholder = "Reason" class = "mb-5" rows = 8>
-                @Model.Target.Reason
-            </textarea>
-            <span asp-validation-for="Reason" class="text-danger"></span>
-            <button class = "btn btn-large text-white core-color mt-5">Submit</button>
-        </form>
-    </div>
+<div class = "border-box px-5 pt-5">
+    @if (Model.Target is null)
+    {
+        <div class = "w-100 h-100 d-flex align-items-center justify-content-center">
+            <h1 class = "opacity-75">There is no data to present</h1>
+        </div>
+    } else 
+    {
+        @foreach(Attendance att in Model.Target)
+        {
+            <div class = "flex-row d-flex justify-content-between">
+                <h2>Status</h2>
+                <p class = "fs-3">@att.Status</p>
+            </div>
+            <div class = "flex-row d-flex justify-content-between">
+                <h2>Date</h2>
+                <p class = "fs-3">@att.Date</p>
+            </div>
+            if (att.Status == "Checked in late" || att.Status == "Checked out early")
+            {
+                <a 
+                    href = @String.Format($"/Employee/EditReason/{Model.EmployeeId}/{att.ID}")
+                    class = "btn btn-lg btn-danger my-5 text-decoration-none"
+                >
+                    Edit reason
+                </a>
+            }
+        }
+    }
 </div>

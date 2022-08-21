@@ -1,43 +1,52 @@
 namespace AttendanceCheckProject.Pages.Employee;
 
-[Authorize(Roles = "Employee")]
+[Authorize(Roles = "Employee,Admin")]
 public class CheckDayModel: PageModel
 {
     private readonly AttendanceDbContext _context;
+    private readonly ICheckRole _checkRole;
 
     [BindProperty(SupportsGet = true)]
-    public int DayId { get; set; }
+    public string EmployeeId { get; set; } = "";
 
-    public Attendance Target { get; set; } = new();
+    [BindProperty(SupportsGet = true)]
+    public int Year { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int Month { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public int Day { get; set; }
+
+    public Attendance[]? Target { get; set; }
 
     [BindProperty]
     [Required(ErrorMessage = "Please input your reason!")]
     public string Reason { get; set; } = "";
 
-    public CheckDayModel(AttendanceDbContext context)
+    public CheckDayModel(AttendanceDbContext context, ICheckRole checkRole)
     {
         _context = context;
+        _checkRole = checkRole;
     }
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
-        var item = 
-            from a in _context.Attendance
-            where a.ID == DayId
-            select a;
-        if (item.FirstOrDefault() is null)
-        {
-            return RedirectToPage("/AccessDenied");
+        if (await _checkRole.EmployeeIsAllowed(User, EmployeeId)) {
+            var data = 
+                from a in _context.Attendance
+                where a.EmployeeId == EmployeeId
+                where a.Date.Year == Year && a.Date.Month == Month && a.Date.Day == Day
+                select a;
+            Target = data.ToArray();
+            return Page();
         }
-        Target = item.FirstOrDefault()!;
-        return Page();
+        return RedirectToPage("/AccessDenied");
     }
 
     public IActionResult OnPost()
     {
         if (ModelState.IsValid)
         {
-            Target.Reason = Reason;
-            _context.Attendance!.Update(Target);
             return RedirectToPage("/Index");
         }
         return Page();

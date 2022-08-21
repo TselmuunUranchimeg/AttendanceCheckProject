@@ -36,7 +36,7 @@ public class EmployeeDeleteModel: PageModel
         if ((await _userManager.GetUserAsync(User)).Id == user.Id)
         {
             ViewData["ErrorMessage"] = "Can't delete your own account!";
-            return Page();
+            return await OnGetAsync();
         }
         var result = await _userManager.DeleteAsync(user);
         if (result.Succeeded)
