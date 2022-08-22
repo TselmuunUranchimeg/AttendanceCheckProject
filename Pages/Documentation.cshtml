@@ -1,0 +1,111 @@
+@page
+@model DocumentationModel
+@{
+    ViewData["Title"] = "Documentation";
+}
+
+<div 
+    class="w-100 h-100 d-flex flex-column align-items-center box-border p-5 overflow-auto"
+>
+    <div class="w-75 text-start mb-3">
+        <h3>"/"</h3>
+        <p>The root route. When logged in, will immediately redirect to "/Homepage".</p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Login"</h3>
+        <p>Authentication route. Through <code>UserManager</code>, will authenticate input.</p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Documentation"</h3>
+        <p>Takes you to the documentation page.</p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Homepage"</h3>
+        <p>
+            Landing page for authenticated users. Provides options of checking in and checking out. The two buttons are
+            <code>form</code> with a POST method configured with handlers with identical names,
+            <code>OnPostCheckIn</code>, <code>OnPostCheckOut</code> respectfully.
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/Attendance/{EmployeeId}"</h3>
+        <h6>EmployeeId: string, Roles: Admin, Employee</h6>
+        <p>
+            Only those who have the <code>Admin</code> role, or are employees with <code>EmployeeId</code> can access
+            the site. Will comb through the <code>Attendance</code> table using <code>AttendanceDbContext</code>, and
+            find dates that have the <code>EmployeeId</code>. In general, there are four types of dates, which are 
+            "Checked in", "Checked out", "Checked in late", "Checked out early". On the calendar, if a day, which will have
+            two attendance checks, have one of them as "Checked in late" or "Checked out early", the background will be red. 
+            Otherwise, it will be green. Furhermore, only the dates stored in the database will have a link to them, 
+            otherwise it will be just a text.
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/CheckDay/{EmployeeId}/{Year}/{Month}/{Day}"</h3>
+        <h6>EmployeeId: string, Year: int, Month: int, Day: int, Roles: "Admin, Employee"</h6>
+        <p>
+            Fetches the attendance data that were recorded on <code>Year</code>, <code>Month</code>, <code>Day</code>
+            and have <code>EmployeeId</code>. If the attendance <code>Status</code> is "Checked in late" or "Checked out early",
+            will have a link to "/Employee/EditReason/{EmployeeId}/{ID}".
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/EditReason/{EmployeeId}/{ID}"</h3>
+        <h6>EmployeeId: string, ID: int, Roles: "Employee"</h6>
+        <p>
+            Only accessible to the employee with the <code>EmployeeId</code>.
+            Fetches <code>Attendance</code> and renders it in a <code>form</code>. 
+            After edit, updates it in the database.
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/Edit/{EmployeeName}"</h3>
+        <h6>EmployeeName: string, Roles: "Admin, Employee"</h6>
+        <p>
+            Only accessible to <code>Admin</code>, and employee with the <code>EmployeeName</code>. 
+            Renders employee data in <code>form</code>. After submission, will update the data. 
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/Details/{EmployeeName}"</h3>
+        <h6>EmployeeName: string, Roles: "Admin, Employee"</h6>
+        <p>
+            Only accessible to <code>Admin</code>, and employee with the <code>EmployeeName</code>.
+            Only renders <code>Employee</code> data whose name is <code>EmployeeName</code>.
+        </p>
+        <p></p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Employee/Delete/{EmployeeName}"</h3>
+        <h6>EmployeeName: string, Roles: "Admin"</h6>
+        <p>
+            Only accessible to <code>Admin</code>.
+            Deletes user as long as it is not the same user accessing the site. 
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Admin/Departments"</h3>
+        <h6>Roles: "Admin"</h6>
+        <p>
+            Only accessible to <code>Admin</code>. Goes through the <code>Attendance</code> table, 
+            and renders every department with the employees in it. Adjacent to the employee names,
+            there are three links ("/Employee/Edit/{EmployeeName}", "/Employee/Details/{EmployeeName}",
+            "/Employee/Delete/{EmployeeName}").
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Admin/AddEmployee"</h3>
+        <p>
+            Only accessible to <code>Admin</code>.
+            Renders a <code>form</code> that upon submission will add the new user to the database.
+        </p>
+    </div>
+    <div class="w-75 text-start mb-3">
+        <h3>"/Logout"</h3>
+        <p>
+            Renders a question with two answers. If the answer is "Yes", 
+            <code>SignInManager</code> will immediately sign the user out. If it is "No", will
+            immediately take the user back to "/Homepage".
+        </p>
+    </div>
+</div>
