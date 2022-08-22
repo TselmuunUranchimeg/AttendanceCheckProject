@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace AttendanceCheckProject.Pages.Admin;
 
 [Authorize(Roles = "Admin")]
@@ -56,24 +54,29 @@ public class AddEmployeeModel: PageModel
         {
             if (ModelState.IsValid)
             {
-                UserModel user = new()
+                var existingUser = from u in _userManager.Users where u.Email == Input.Email select u;
+                if (existingUser is null)
                 {
-                    Age = Input.Age,
-                    Email = Input.Email,
-                    UserName = Input.Name,
-                    Department = Input.Department
-                };
-                /* await _userStore.SetUserNameAsync(user, user.UserName, CancellationToken.None); */
-                IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
-                if (!await _roleManager.RoleExistsAsync("Employee"))
-                {
-                    await _roleManager.CreateAsync(new IdentityRole() { Name = "Employee" });
+                    UserModel user = new()
+                    {
+                        Age = Input.Age,
+                        Email = Input.Email,
+                        UserName = Input.Name,
+                        Department = Input.Department
+                    };
+                    IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
+                    if (!await _roleManager.RoleExistsAsync("Employee"))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole() { Name = "Employee" });
+                    }
+                    await _userManager.AddToRoleAsync(user, "Employee");
+                    if (result.Succeeded)
+                    {
+                        return RedirectToPage("/Admin/Homepage");
+                    }
                 }
-                await _userManager.AddToRoleAsync(user, "Employee");
-                if (result.Succeeded)
-                {
-                    return RedirectToPage("/Admin/Homepage");
-                }
+                ViewData["ErrorMessage"] = "User with that email already exists";
+                return Page();
             }
             return Page();
         }

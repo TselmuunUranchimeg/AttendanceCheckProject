@@ -4,7 +4,8 @@
     ViewData["Title"] = "Register new employee";
 }
 
-<div class = "d-flex align-items-center justify-content-center h-100">
+<div class = "d-flex align-items-center justify-content-center h-100 flex-column">
+    <h2 class = "text-danger m-0">@ViewData["ErrorMessage"]</h2>
     <form id="account" method="post" class = "form-custom" autocomplete="off">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-floating mb-5">

@@ -20,7 +20,11 @@ builder.Services.AddDbContext<AttendanceDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddIdentity<UserModel, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddIdentity<UserModel, IdentityRole>(options => 
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<UserDbContext>();
 builder.Services.ConfigureApplicationCookie(options =>

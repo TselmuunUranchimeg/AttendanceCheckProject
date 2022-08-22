@@ -91,30 +91,34 @@ namespace AttendanceCheckProject.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
-                user.Email = Input.Email;
-                user.UserName = Input.UserName;
-                user.Department = "Management";
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                var existingUser = from u in _userManager.Users where u.Email == Input.Email select u;
+                if (existingUser is null)
                 {
-                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                    var user = CreateUser();
+                    user.Email = Input.Email;
+                    user.UserName = Input.UserName;
+                    user.Department = "Management";
+                    await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                    var result = await _userManager.CreateAsync(user, Input.Password);
+                    if (result.Succeeded)
                     {
-                        IdentityRole newRole = new() { Name = "Admin" };
-                        await _roleManager.CreateAsync(newRole);
+                        if (!await _roleManager.RoleExistsAsync("Admin"))
+                        {
+                            IdentityRole newRole = new() { Name = "Admin" };
+                            await _roleManager.CreateAsync(newRole);
+                        }
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                        _logger.LogInformation("User created a new account with password.");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect("/Homepage");
                     }
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                    _logger.LogInformation("User created a new account with password.");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect("/Homepage");
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
-
+            ModelState.AddModelError(string.Empty, "User with that email already exists!");
             // If we got this far, something failed, redisplay form
             return Page();
         }
