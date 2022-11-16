@@ -9,7 +9,7 @@ public class CheckRole: ICheckRole
     }
     public async Task<bool> EmployeeIsAllowed(ClaimsPrincipal User, string allowedEmployeeId)
     {
-        UserModel user = await _userManager.GetUserAsync(User);
+        UserModel user = (await _userManager.GetUserAsync(User))!;
         var roles = await _userManager.GetRolesAsync(user);
         if (roles.Contains("Employee"))
         {

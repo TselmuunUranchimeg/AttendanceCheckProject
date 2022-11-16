@@ -26,7 +26,7 @@ public class HomepageModel: PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        UserModel user = await _userManager.GetUserAsync(User);
+        UserModel user = (await _userManager.GetUserAsync(User))!;
         var list = 
             from item in _context.Attendance?.AsEnumerable()
             where item.EmployeeId == user.Id
@@ -39,7 +39,7 @@ public class HomepageModel: PageModel
     {
         try
         {
-            UserModel user = await _userManager.GetUserAsync(User);
+            UserModel user = (await _userManager.GetUserAsync(User))!;
             var newAttendance = _attendanceCheck.Check(user, DateTime.Now, StatusEnum.CheckIn);
             _context.Attendance?.Add(newAttendance);
             await _context.SaveChangesAsync();
@@ -55,7 +55,7 @@ public class HomepageModel: PageModel
     {
         try
         {
-            UserModel user = await _userManager.GetUserAsync(User);
+            UserModel user = (await _userManager.GetUserAsync(User))!;
             var newAttendance = _attendanceCheck.Check(user, DateTime.Now, StatusEnum.CheckOut);
             _context.Attendance?.Add(newAttendance);
             await _context.SaveChangesAsync();

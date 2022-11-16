@@ -14,7 +14,7 @@ public class EmployeeDetailsModel: PageModel
     }
     public async Task<IActionResult> OnGet()
     {
-        UserModel user = await _userManager.GetUserAsync(User);
+        UserModel user = (await _userManager.GetUserAsync(User))!;
         var roles = await _userManager.GetRolesAsync(user);
         if (roles.Contains("Employee"))
         {
@@ -23,7 +23,7 @@ public class EmployeeDetailsModel: PageModel
                 return RedirectToPage("/AccessDenied");
             }
         }
-        UserData = await _userManager.FindByNameAsync(EmployeeName);
+        UserData = (await _userManager.FindByNameAsync(EmployeeName!))!;
         return Page();
     }
 }

@@ -13,7 +13,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        UserModel user = await _userManager.GetUserAsync(User);
+        UserModel user = (await _userManager.GetUserAsync(User))!;
         if (user is not null)
         {
             return RedirectToPage("/Homepage");

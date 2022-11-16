@@ -20,7 +20,7 @@ public class DepartmentModel: PageModel
             from u in _userManager.Users
             where u.Department == DepartmentName
             select u.UserName;
-        UserModel user = await _userManager.GetUserAsync(User);
+        UserModel user = (await _userManager.GetUserAsync(User))!;
         var roles = await _userManager.GetRolesAsync(user);
         if (roles.Contains("Employee"))
         {

@@ -28,12 +28,12 @@ public class EmployeeDeleteModel: PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        UserModel user = await _userManager.FindByNameAsync(Name);
+        UserModel user = (await _userManager.FindByNameAsync(Name))!;
         if (user is null)
         {
             return NotFound();
         }
-        if ((await _userManager.GetUserAsync(User)).Id == user.Id)
+        if ((await _userManager.GetUserAsync(User))!.Id == user.Id)
         {
             ViewData["ErrorMessage"] = "Can't delete your own account!";
             return await OnGetAsync();

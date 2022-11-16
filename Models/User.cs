@@ -7,7 +7,7 @@ public class UserModel: IdentityUser
 
     [Required]
     [EmailAddress]
-    public override string Email { get; set; } = "";
+    public override string? Email { get; set; } = "";
 
     [Required]
     public string? Department { get; set; } = "";

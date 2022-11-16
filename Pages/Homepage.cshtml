@@ -2,7 +2,7 @@
 @model HomepageModel
 @inject UserManager<UserModel> _userManager;
 @{
-    var user = await _userManager.GetUserAsync(User);
+    var user = (await _userManager.GetUserAsync(User))!;
     var roles = await _userManager.GetRolesAsync(user);
     string title = "Employee homepage";
     if (roles.Contains("Admin"))

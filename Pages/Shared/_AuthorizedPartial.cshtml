@@ -1,8 +1,8 @@
 @inject UserManager<UserModel> userManager;
 
 @{
-    var user = await userManager.GetUserAsync(User);
-    var roles = await userManager.GetRolesAsync(user);
+    var user = (await userManager.GetUserAsync(User))!;
+    var roles = (await userManager.GetRolesAsync(user))!;
     <li class = "w-100 sidebar-link text-start px-5 mb-4">
         <a 
             href = "/Homepage" 

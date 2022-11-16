@@ -35,7 +35,7 @@ public class EmployeeEditModel: PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        UserModel currentUser = await _userManager.GetUserAsync(User);
+        UserModel currentUser = (await _userManager.GetUserAsync(User))!;
         var roles = await _userManager.GetRolesAsync(currentUser);
         if (roles.Contains("Employee"))
         {
@@ -50,8 +50,8 @@ public class EmployeeEditModel: PageModel
             return RedirectToPage("/Index");
         }
         Input.Age = user.Age;
-        Input.UserName = user.UserName;
-        Input.Email = user.Email;
+        Input.UserName = user.UserName!;
+        Input.Email = user.Email!;
         Input.Department = user.Department!;
         return Page();
     }
