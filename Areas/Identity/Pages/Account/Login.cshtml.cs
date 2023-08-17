@@ -105,12 +105,12 @@ namespace AttendanceCheckProject.Areas.Identity.Pages.Account
                         var roles = await _userManager.GetRolesAsync(user);
                         return RedirectToPage("/Homepage");
                     }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                        return Page();
-                    }
+                } else 
+                {
+                    _logger.LogInformation(user?.Email);
                 }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return Page();
             }
 
             // If we got this far, something failed, redisplay form

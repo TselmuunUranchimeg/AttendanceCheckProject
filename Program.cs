@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Services.CheckRole;
 using Services.AttendanceCheck;
 using ScheduledTasks;
 using Quartz;
@@ -7,8 +6,8 @@ using Quartz;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-MySqlServerVersion version = new(new Version(8, 0, 30));
+var connectionString = builder.Configuration.GetConnectionString("UserDbContextConnection");
+MySqlServerVersion version = new(new Version(8, 0, 33));
 builder.Services.AddDbContext<UserDbContext>(options =>
 {
     options.UseMySql(connectionString, version);
